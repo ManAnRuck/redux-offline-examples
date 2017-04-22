@@ -1,9 +1,9 @@
 import React from 'react';
 
-export default ({text}) => {
+export default ({todo}) => {
   return (
     <li className="collection-item">
-      <input type="checkbox" id="test5" /> <label htmlFor="test5">{text}</label>
+      <input type="checkbox" id={`todo-${todo.id}`} /> <label htmlFor={`todo-${todo.id}`}>{todo.text}</label>
     </li>
   )
 }
