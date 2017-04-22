@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import logger from 'redux-logger';
+import promise from 'redux-promise';
 
 import App from './App';
 
@@ -19,7 +20,7 @@ let store = createStore(
     {id: 1, text: "todo 2", complete: true},
     {id: 2, text: "todo 3", complete: false},
   ]},
-  applyMiddleware(logger)
+  applyMiddleware(promise, logger)
 );
 
 ReactDOM.render(
