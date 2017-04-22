@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
-import { combineReducers, createStore } from 'redux'
+import { combineReducers, createStore, applyMiddleware } from 'redux';
+import logger from 'redux-logger';
 
 import App from './App';
 
@@ -16,7 +17,8 @@ let store = createStore(
   }),
   {todos: [
     {id: 1, text: "todo 2"}
-  ]}
+  ]},
+  applyMiddleware(logger)
 );
 
 ReactDOM.render(
