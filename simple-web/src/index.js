@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
-import { combineReducers, createStore, applyMiddleware } from 'redux';
+import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
 import logger from 'redux-logger';
 import promise from 'redux-promise';
+import { offline } from 'redux-offline';
+import offlineConfig from 'redux-offline/lib/defaults';
 
 import App from './App';
 
@@ -17,7 +19,14 @@ let store = createStore(
     todos: TodoReducer,
   }),
   undefined,
-  applyMiddleware(promise, logger)
+  compose(
+    applyMiddleware(promise, logger),
+    offline({
+      ...offlineConfig,
+      retry: (action, retries) => action.meta.urgent ? 100 : 5000
+    })
+  )
+
 );
 
 ReactDOM.render(
