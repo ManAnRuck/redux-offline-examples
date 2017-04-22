@@ -1,24 +1,43 @@
 import axios from 'axios';
+import { v4 as generateUid } from 'uuid';
 
 export const TODO_CREATE = "TODO_CREATE";
+export const TODO_CREATE_COMMIT = "TODO_CREATE_COMMIT";
 export const TODO_CHANGE_COMPLETE = "TODO_CHANGE_COMPLETE";
 export const TODO_FETCH_ALL = "TODO_FETCH_ALL";
+export const TODO_FETCH_ALL_COMMIT = "TODO_FETCH_ALL_COMMIT";
 
 const ROOT_URL = 'http://localhost:3004';
 
 export const fetchTodos = () => {
-  const request = axios.get(`${ROOT_URL}/todos`);
   return {
     type: TODO_FETCH_ALL,
-    payload: request
+    payload: [],
+    meta: {
+      offline: {
+        // the network action to execute:
+        effect: { url: `${ROOT_URL}/todos`, method: 'GET' },
+        // action to dispatch when effect succeeds:
+        commit: { type: TODO_FETCH_ALL_COMMIT },
+      }
+    }
   }
 }
 
 export const createTodo = ({text}) => {
-  const request = axios.post(`${ROOT_URL}/todos`, {text, complete: false});
+  //const request = axios.post(`${ROOT_URL}/todos`, {text, complete: false});
+  const uid = generateUid();
   return {
     type: TODO_CREATE,
-    payload: request
+    payload: { id: uid, text, complete: false },
+    meta: {
+      offline: {
+        // the network action to execute:
+        effect: { url: `${ROOT_URL}/todos`, method: 'POST', body: JSON.stringify( {text, complete: false} ) },
+        // action to dispatch when effect succeeds:
+        commit: { type: TODO_CREATE_COMMIT, meta: { localId: uid } },
+      }
+    }
   }
 }
 
