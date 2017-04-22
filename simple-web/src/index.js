@@ -16,7 +16,8 @@ let store = createStore(
     todos: TodoReducer,
   }),
   {todos: [
-    {id: 1, text: "todo 2"}
+    {id: 1, text: "todo 2", complete: true},
+    {id: 2, text: "todo 3", complete: false},
   ]},
   applyMiddleware(logger)
 );
