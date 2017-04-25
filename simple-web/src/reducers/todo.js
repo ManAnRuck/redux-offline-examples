@@ -37,7 +37,12 @@ export default (state = INITIAL_STATE, action) => {
         return todo
       })
     case TODO_CHANGE_COMPLETE_COMMIT:
-      return [...state];
+        return state.map(todo => {
+          if(action.payload.id === todo.id) {
+            return {...todo, complete: action.payload.complete}
+          }
+          return todo
+        })
 
     default:
       return state
