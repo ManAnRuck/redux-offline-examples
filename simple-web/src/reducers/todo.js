@@ -2,6 +2,7 @@ import {
   TODO_CREATE,
   TODO_CREATE_COMMIT,
   TODO_CHANGE_COMPLETE,
+  TODO_CHANGE_COMPLETE_COMMIT,
   TODO_FETCH_ALL,
   TODO_FETCH_ALL_COMMIT,
 } from '../actions/todo';
@@ -30,11 +31,13 @@ export default (state = INITIAL_STATE, action) => {
 
     case TODO_CHANGE_COMPLETE:
       return state.map(todo => {
-        if(action.payload.data.id === todo.id) {
-          return {...todo, complete: action.payload.data.complete}
+        if(action.payload.id === todo.id) {
+          return {...todo, complete: action.payload.complete}
         }
         return todo
       })
+    case TODO_CHANGE_COMPLETE_COMMIT:
+      return [...state];
 
     default:
       return state

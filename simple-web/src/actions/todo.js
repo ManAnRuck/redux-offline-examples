@@ -1,9 +1,11 @@
-import axios from 'axios';
+//import axios from 'axios';
 import { v4 as generateUid } from 'uuid';
 
 export const TODO_CREATE = "TODO_CREATE";
 export const TODO_CREATE_COMMIT = "TODO_CREATE_COMMIT";
+
 export const TODO_CHANGE_COMPLETE = "TODO_CHANGE_COMPLETE";
+export const TODO_CHANGE_COMPLETE_COMMIT = "TODO_CHANGE_COMPLETE_COMMIT";
 export const TODO_FETCH_ALL = "TODO_FETCH_ALL";
 export const TODO_FETCH_ALL_COMMIT = "TODO_FETCH_ALL_COMMIT";
 
@@ -29,7 +31,7 @@ export const createTodo = ({text}) => {
   const uid = generateUid();
   return {
     type: TODO_CREATE,
-    payload: { id: uid, text, complete: false },
+    payload: { id: uid, text, complete: false, localId: uid },
     meta: {
       offline: {
         // the network action to execute:
@@ -42,9 +44,15 @@ export const createTodo = ({text}) => {
 }
 
 export const changeComplete = ({todoId, complete}) => {
-  const request = axios.patch(`${ROOT_URL}/todos/${todoId}`, {complete});
+  //const request = axios.patch(`${ROOT_URL}/todos/${todoId}`, {complete});
   return {
     type: TODO_CHANGE_COMPLETE,
-    payload: request
+    payload: { id: todoId, complete},
+    meta: {
+      offline: {
+        effect: { url: `${ROOT_URL}/todos/${todoId}`, method: 'PATCH', body: JSON.stringify( {complete} )},
+        commit: { type: TODO_CHANGE_COMPLETE_COMMIT },
+      }
+    }
   }
 }
