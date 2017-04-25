@@ -5,8 +5,14 @@ export const TODO_CREATE_COMMIT = "TODO_CREATE_COMMIT";
 
 export const TODO_CHANGE_COMPLETE = "TODO_CHANGE_COMPLETE";
 export const TODO_CHANGE_COMPLETE_COMMIT = "TODO_CHANGE_COMPLETE_COMMIT";
+
 export const TODO_FETCH_ALL = "TODO_FETCH_ALL";
 export const TODO_FETCH_ALL_COMMIT = "TODO_FETCH_ALL_COMMIT";
+
+export const TODO_DELETE = "TODO_DELETE";
+export const TODO_DELETE_COMMIT = "TODO_DELETE_COMMIT";
+
+
 
 const ROOT_URL = 'http://localhost:3004';
 
@@ -49,6 +55,19 @@ export const changeComplete = ({todoId, complete}) => {
       offline: {
         effect: { url: `${ROOT_URL}/todos/${todoId}`, method: 'PATCH', body: JSON.stringify( {complete} )},
         commit: { type: TODO_CHANGE_COMPLETE_COMMIT },
+      }
+    }
+  }
+}
+
+export const deleteTodo = ({todoId}) => {
+  return {
+    type: TODO_DELETE,
+    payload: { id: todoId },
+    meta: {
+      offline: {
+        effect: { url: `${ROOT_URL}/todos/${todoId}`, method: 'DELETE' },
+        commit: { type: TODO_DELETE_COMMIT },
       }
     }
   }

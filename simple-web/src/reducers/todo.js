@@ -5,6 +5,7 @@ import {
   TODO_CHANGE_COMPLETE_COMMIT,
   TODO_FETCH_ALL,
   TODO_FETCH_ALL_COMMIT,
+  TODO_DELETE
 } from '../actions/todo';
 
 
@@ -43,6 +44,9 @@ export default (state = INITIAL_STATE, action) => {
           }
           return todo
         })
+
+    case TODO_DELETE:
+        return state.filter(todo => action.payload.id !== todo.id);
 
     default:
       return state
