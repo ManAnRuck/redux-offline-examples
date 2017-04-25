@@ -1,4 +1,3 @@
-//import axios from 'axios';
 import { v4 as generateUid } from 'uuid';
 
 export const TODO_CREATE = "TODO_CREATE";
@@ -27,7 +26,6 @@ export const fetchTodos = () => {
 }
 
 export const createTodo = ({text}) => {
-  //const request = axios.post(`${ROOT_URL}/todos`, {text, complete: false});
   const uid = generateUid();
   return {
     type: TODO_CREATE,
@@ -44,7 +42,6 @@ export const createTodo = ({text}) => {
 }
 
 export const changeComplete = ({todoId, complete}) => {
-  //const request = axios.patch(`${ROOT_URL}/todos/${todoId}`, {complete});
   return {
     type: TODO_CHANGE_COMPLETE,
     payload: { id: todoId, complete},
