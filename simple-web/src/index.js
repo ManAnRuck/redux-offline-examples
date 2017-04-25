@@ -6,6 +6,7 @@ import logger from 'redux-logger';
 import promise from 'redux-promise';
 import { offline } from 'redux-offline';
 import offlineConfig from 'redux-offline/lib/defaults';
+//import { devToolsEnhancer } from 'redux-devtools-extension/logOnlyInProduction'
 
 import App from './App';
 
@@ -21,6 +22,7 @@ let store = createStore(
   undefined,
   compose(
     applyMiddleware(promise, logger),
+    //devToolsEnhancer(), // https://github.com/jevakallio/redux-offline/issues/60
     offline({
       ...offlineConfig,
       retry: (action, retries) => action.meta.urgent ? 100 : 5000
