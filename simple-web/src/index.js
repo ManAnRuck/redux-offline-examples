@@ -19,19 +19,18 @@ import './index.css';
 const localIdsReducer = (state, action) => {
     switch (action.type) {
       case "TODO_CREATE_COMMIT":
-        let newState = {...state};
-        newState.offline.outbox = newState.offline.outbox.map(entry => {
+        state.offline.outbox = state.offline.outbox.map(entry => {
           switch (entry.type) {
             case "TODO_CHANGE_COMPLETE":
               entry.meta.offline.effect.url = entry.meta.offline.effect.url.replace(action.meta.localId, action.payload.id)
               entry.payload.id = action.payload.id;
               return {...entry};
-              break;
+
             default:
               return entry;
           }
         })
-        return state;
+        return {...state};
 
       default:
         return state;
