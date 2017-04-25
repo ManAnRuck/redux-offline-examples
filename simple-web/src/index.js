@@ -12,32 +12,12 @@ import localIds from "./middlewares/redux-offline-localids"
 
 import App from './App';
 
-import TodoReducer from "./reducers/todo"
+import TodoReducer from "./reducers/todo";
+import OfflineReducer from "./reducers/offline";
 
 import './index.css';
 
-const localIdsReducer = (state, action) => {
-    switch (action.type) {
-      case "TODO_CREATE_COMMIT":
-        state.offline.outbox = state.offline.outbox.map(entry => {
-          switch (entry.type) {
-            case "TODO_CHANGE_COMPLETE":
-            case "TODO_DELETE":
-              entry.meta.offline.effect.url = entry.meta.offline.effect.url.replace(action.meta.localId, action.payload.id)
-              entry.payload.id = action.payload.id;
-              return {...entry};
 
-            default:
-              return entry;
-          }
-        })
-        return {...state};
-
-      default:
-        return state;
-
-    }
-};
 
 const store = createStore(
   combineReducers({
@@ -51,7 +31,7 @@ const store = createStore(
       ...offlineConfig,
       retry: (action, retries) => action.meta.urgent ? 100 : 10000
     }),
-    localIds({reducer: localIdsReducer}),
+    localIds({reducer: OfflineReducer}),
   )
 
 );
