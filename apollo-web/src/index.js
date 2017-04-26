@@ -36,7 +36,7 @@ const store = createStore(
       effect: (effect, action) => {
         switch (effect.type) {
           case "query":
-            return apolloClient.query({query: effect.query}).then(({data}) => data);
+            return apolloClient.query({...effect}).then(({data}) => data);
           case "mutation":
             return apolloClient.mutate({...effect}).then(({data}) => data);
           default:

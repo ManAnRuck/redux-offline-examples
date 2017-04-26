@@ -11,7 +11,7 @@ import { allTodoesQuery } from '../apollo/queries';
 class TodoList extends Component {
 
   componentWillMount() {
-    this.props.fetchTodos({query: allTodoesQuery});
+    this.props.fetchTodos({query: allTodoesQuery, fetchPolicy: 'network-only'});
   }
 
   render () {

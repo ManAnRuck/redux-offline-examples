@@ -14,14 +14,14 @@ export const TODO_FETCH_ALL_COMMIT = "TODO_FETCH_ALL_COMMIT";
 export const TODO_DELETE = "TODO_DELETE";
 export const TODO_DELETE_COMMIT = "TODO_DELETE_COMMIT";
 
-export const fetchTodos = ({query}) => {
+export const fetchTodos = ({query, fetchPolicy}) => {
   return {
     type: TODO_FETCH_ALL,
     payload: [],
     meta: {
       offline: {
         // the network action to execute:
-        effect: { type: "query", query },
+        effect: { type: "query", query, fetchPolicy },
         // action to dispatch when effect succeeds:
         commit: { type: TODO_FETCH_ALL_COMMIT },
       }
