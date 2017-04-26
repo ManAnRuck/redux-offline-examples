@@ -20,7 +20,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "now-start": "react-scripts build && cd build && serve -s ./",
+    "now-start": "cd build && serve -s ./",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
