@@ -6,19 +6,22 @@ import TodoItem from "./TodoItem"
 
 import { fetchTodos } from '../actions/todo';
 
+import { allTodoesQuery } from '../apollo/queries';
+
 class TodoList extends Component {
 
   componentWillMount() {
-    this.props.fetchTodos();
+    this.props.fetchTodos({query: allTodoesQuery});
   }
 
   render () {
+    const todos = this.props.todos;
     return (
       <div>
         <h1>TodoList</h1>
         <TodoCreate />
         <ul className="collection">
-          {this.props.todos.map(todo => (
+          {todos.map(todo => (
               <TodoItem key={todo.id} todo={todo} />
             )
           )}
@@ -29,6 +32,7 @@ class TodoList extends Component {
 }
 
 const mapStateToProps = (state) => {
+  //console.log("state", state)
   return {
     todos: state.todos,
   };

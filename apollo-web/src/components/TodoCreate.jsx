@@ -1,7 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { gql } from 'react-apollo';
 
 import { createTodo } from '../actions/todo'
+
+const mutation = gql`
+  mutation CreateTodo($complete: Boolean!, $text: String!)
+  {
+    createTodo(complete: $complete, text: $text)
+    {
+      id
+      text
+      complete
+    }
+  }
+`;
 
 class TodoCreate extends Component {
   constructor(props) {
@@ -15,7 +28,7 @@ class TodoCreate extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.createTodo({text: this.state.text});
+    this.props.createTodo({text: this.state.text, complete: false, mutation});
     this.setState({
       text: ''
     })

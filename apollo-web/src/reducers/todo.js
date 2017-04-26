@@ -18,14 +18,15 @@ export default (state = INITIAL_STATE, action) => {
     case TODO_FETCH_ALL:
       return action.payload
     case TODO_FETCH_ALL_COMMIT:
-      return action.payload
+      return action.payload.allTodoes
 
     case TODO_CREATE:
       return [...state, action.payload]
     case TODO_CREATE_COMMIT:
       return state.map(todo => {
         if(action.meta.localId === todo.id) {
-          return {...action.payload}
+          console.log("payload", action.payload)
+          return {...action.payload.createTodo}
         }
         return todo
       })
