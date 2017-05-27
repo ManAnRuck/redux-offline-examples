@@ -18,9 +18,9 @@
     "react-scripts": "0.9.5"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "start": "BABEL_ENV=development react-scripts start",
+    "build": "BABEL_ENV=production react-scripts build",
+    "test": "BABEL_ENV=test react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
 }
